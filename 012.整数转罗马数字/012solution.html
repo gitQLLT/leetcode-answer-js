@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 方法1：模拟
+        // 时间复杂度O(1) 空间复杂度O(1)
+        var intToRoman = function (num) {
+            const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            const valueSymbols = new Map();
+            valueSymbols.set(1000, "M");
+            valueSymbols.set(900, "CM");
+            valueSymbols.set(500, "D");
+            valueSymbols.set(400, "CD");
+            valueSymbols.set(100, "C");
+            valueSymbols.set(90, "XC");
+            valueSymbols.set(50, "L");
+            valueSymbols.set(40, "XL");
+            valueSymbols.set(10, "X");
+            valueSymbols.set(9, "IX");
+            valueSymbols.set(5, "V");
+            valueSymbols.set(4, "IV");
+            valueSymbols.set(1, "I");
+            const roman = [];
+            for (const value of values) {
+                const symbol = valueSymbols.get(value);
+                while (num >= value) {
+                    num -= value;
+                    roman.push(symbol);
+                }
+                if (num == 0) {
+                    break;
+                }
+            }
+            return roman.join('');
+        };
+
+        // 方法2：硬编码数字
+        // 时间复杂度O(1) 空间复杂度O(1)
+        var intToRoman = function (num) {
+            const thousands = ["", "M", "MM", "MMM"];
+            const hundreds = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
+            const tens = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
+            const ones = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+
+            const roman = [];
+            roman.push(thousands[Math.floor(num / 1000)]);
+            roman.push(hundreds[Math.floor(num % 1000 / 100)]);
+            roman.push(tens[Math.floor(num % 100 / 10)]);
+            roman.push(ones[num % 10]);
+            return roman.join('');
+        };
+
+        //测试
+        console.log(intToRoman(3214));
+        console.log(intToRoman(56));
+    </script>
+</body>
+
+</html>

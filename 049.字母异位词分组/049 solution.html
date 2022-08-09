@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Source : https://leetcode.com/problems/anagrams/
+        // Author : 悬笔e绝
+        // Date   : 2018-04-02
+
+        // 方法1：常规 字符串函数 + 遍历
+        var groupAnagrams = function (strs) {
+            var ans = [];
+            var hash = {};
+
+            strs.forEach(function (item) {
+                //拆开按照字母顺序排好
+                var str = item.split('').sort().join('');
+                if (hash[str] === undefined) {
+                    //str代表一个字谜，长度是他的索引
+                    hash[str] = ans.length;
+                    //加入一个新的字谜数组
+                    ans.push([item]);
+                } else {
+                    //累加到某一个字谜数组中，hash[str]是它的索引
+                    ans[hash[str]].push(item);
+                }
+            });
+
+            return ans;
+        };
+
+        // 方法2：排序
+        // 时间复杂度：O(nklogk) 空间复杂度：O(nk)
+        var groupAnagrams = function (strs) {
+            const map = new Map();
+            for (let str of strs) {
+                let array = Array.from(str);
+                array.sort();
+                let key = array.toString();
+                let list = map.get(key) ? map.get(key) : new Array();
+                list.push(str);
+                map.set(key, list);
+            }
+            return Array.from(map.values());
+        };
+
+        // 方法3：计数
+        // 时间复杂度：O(n(k+∣Σ∣)) 空间复杂度：O(n(k+∣Σ∣))
+        var groupAnagrams = function (strs) {
+            const map = new Object();
+            for (let s of strs) {
+                const count = new Array(26).fill(0);
+                for (let c of s) {
+                    count[c.charCodeAt() - 'a'.charCodeAt()]++;
+                }
+                map[count] ? map[count].push(s) : map[count] = [s];
+            }
+            return Object.values(map);
+        };
+
+        //测试
+        var strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+        console.log(groupAnagrams(strs));
+    </script>
+</body>
+
+</html>

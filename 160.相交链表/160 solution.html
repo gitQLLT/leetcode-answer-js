@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 方法1：哈希集合
+    // 时间复杂度：O(m+n) m 和 n 是两个链表的长度
+    // 空间复杂度：O(m)
+    var getIntersectionNode = function (headA, headB) {
+      const visited = new Set();
+      let temp = headA;
+      while (temp !== null) {
+        visited.add(temp);
+        temp = temp.next;
+      }
+      temp = headB;
+      while (temp !== null) {
+        if (visited.has(temp)) {
+          return temp;
+        }
+        temp = temp.next;
+      }
+      return null;
+    };
+
+    // 方法2：双指针
+    // 时间复杂度：O(m+n) m 和 n 是两个链表的长度
+    // 空间复杂度：O(1)
+    var getIntersectionNode = function (headA, headB) {
+      if (headA === null || headB === null) {
+        return null;
+      }
+      let pA = headA,
+        pB = headB;
+      while (pA !== pB) {
+        pA = pA === null ? headB : pA.next;
+        pB = pB === null ? headA : pB.next;
+      }
+      return pA;
+    };
+  </script>
+</body>
+
+</html>

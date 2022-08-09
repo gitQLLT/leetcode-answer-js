@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+// Source : https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+// Author : 悬笔e绝
+// Date   : 2020-02-01
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+
+// 方法1：递归
+var lowestCommonAncestor = function(root, p, q) {
+  if (p.val < root.val && q.val < root.val)
+    return lowestCommonAncestor(root.left, p, q);
+  else if (p.val > root.val && q.val > root.val)
+    return lowestCommonAncestor(root.right, p, q);
+  else
+    return root;
+};
+
+// 方法2：迭代, 一次遍历
+// 时间复杂度 O(n) 空间复杂度 O(1)
+const lowestCommonAncestor = (root, p, q) => {
+  while (root) {
+    if (p.val < root.val && q.val < root.val) {
+      root = root.left;
+    } else if (p.val > root.val && q.val > root.val) {
+      root = root.right;
+    } else {
+      break;
+    }
+  }
+  return root;
+};
+
+</script>
+</body>
+</html>

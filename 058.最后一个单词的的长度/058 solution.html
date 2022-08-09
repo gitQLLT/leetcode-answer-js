@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 方法1：反向遍历
+        // 时间复杂度O(n) 空间复杂度O(1)
+        var lengthOfLastWord = function (s) {
+            let index = s.length - 1;
+            while (s[index] === ' ') {
+                index--;
+            }
+            let wordLength = 0;
+            while (index >= 0 && s[index] !== ' ') {
+                wordLength++;
+                index--;
+            }
+            return wordLength;
+        };
+
+        //测试
+        var s1 = "Hello World";
+        var s2 = "Hello World m";
+        var s3 = "Hello World  ";
+        var s4 = "  n  ";
+        console.log(lengthOfLastWord(s1));
+        console.log(lengthOfLastWord(s2));
+        console.log(lengthOfLastWord(s3));
+        console.log(lengthOfLastWord(s4));
+    </script>
+</body>
+
+</html>

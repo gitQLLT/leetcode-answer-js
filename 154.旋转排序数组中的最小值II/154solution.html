@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 有重复元素
+
+    // 解法1：借助JS函数
+    var findMin = function (nums) {
+      return Math.min.apply(null, nums);
+      // 或者
+      // return Math.min(...nums)
+    };
+
+    // 解法2： 二分法
+    // 平均时间复杂度 O(logn) ，元素全部相同时 最差是O(n)
+    // 空间复杂度 O(1)
+    var findMin = function (nums) {
+      let low = 0;
+      let high = nums.length - 1;
+      while (low < high) {
+        const pivot = low + Math.floor((high - low) / 2);
+        if (nums[pivot] < nums[high]) {
+          high = pivot;
+        } else if (nums[pivot] > nums[high]) {
+          low = pivot + 1;
+        } else {
+          high -= 1;
+        }
+      }
+      return nums[low];
+    };
+
+    // test
+    const nums = [2, 2, 2, 0, 1];
+    console.log(findMin(nums));
+  </script>
+</body>
+
+</html>

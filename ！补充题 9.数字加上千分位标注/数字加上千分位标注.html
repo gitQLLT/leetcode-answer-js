@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 解法1：普通版本
+        function exchange1(num) {
+            let str = num + '';
+            let arr = [], count = str.length;
+            while(count >= 3) {
+                // 从后往前，每三个字符存到一个数组前面，保证顺序
+                arr.unshift(str.slice(count-3, count));
+                count -=3;
+            }
+            // 不是3的倍数最后追加到数组最前面
+            str.length % 3 && arr.unshift(str.slice(0, str.length % 3));
+            // return arr.join(',');
+            return arr.toString(); // 数组toString也会用,逗号隔开
+        }
+
+        // 解法2： 数组的API耍的飞起
+        function exchange2(num) {
+            let str = num + '';
+            let result = str.split('').reverse().reduce((prev, next, index) => {
+                return ((index % 3) ? next : (next + ',')) + prev
+            })
+            return result;
+        }
+        
+        // 解法3： 正则
+        function exchange3(num) {
+            num += ''; //转成字符串串
+            if (num.length <= 3) {
+                return num;
+            } 
+            // ?=n 表示 “匹配任何其后紧接指定字符串 n 的字符串”,即找到前面那个字符
+            //所以这里匹配的三个结果分别是：1 ;  234;  567; 
+            num = num.replace(/\d{1,3}(?=(\d{3})+$)/g, (v) => {
+                // console.log(v)
+                return v + ',';
+            });
+            return num;
+        }
+
+        // 解法4：API版本， toLocaleString, 兼容性挺好 IE6支持
+        function exchange4(num) {
+            return num.toLocaleString('en-US');
+        }
+
+        // 解法5：API版本， Intl对象, 兼容性不够好
+        function exchange5(num) {
+            return Intl.NumberFormat().format(num+ '');
+        }
+
+        console.log(exchange1(1234567))
+        console.log(exchange2(1234567))
+        console.log(exchange3(1234567))
+        console.log(exchange4(1234567))
+        console.log(exchange5(1234567))
+
+    </script>
+</body>
+
+</html>

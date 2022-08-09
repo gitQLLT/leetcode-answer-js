@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+// Source : https://leetcode.com/problems/valid-palindrome/
+// Author : 悬笔e绝
+// Date   : 2019-06-07
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+
+// 方法1：数组API，使用额外空间
+var isPalindrome1 = function(s) {
+  // 非单次字符 替换成空
+  s = s.replace(/[\W]/g, '');
+  // 转成小写
+  s = s.toLowerCase();
+  // 拆开倒置再拼接
+  var _s = s.split('').reverse().join('');
+  return s === _s;
+};
+
+// 方法2：双指针，空间复杂度 O(1)
+var isPalindrome2 = (s) => {
+  s = s.replace(/\W/g, '').toLowerCase();
+  var left = 0;
+  var right = s.length - 1;
+  while(left < right) {
+    if (s[left] !== s[right]) {
+      return false;
+    }
+    left ++;
+    right --;
+  }
+  return true;
+}
+
+// 拼接
+var s1 =  "A man, a plan, a canal: Panama";
+console.log(isPalindrome1(s1));
+console.log(isPalindrome2(s1));
+var s2 =  "race a car";
+console.log(isPalindrome1(s2));
+console.log(isPalindrome2(s2));
+</script>
+</body>
+</html>
